@@ -1,6 +1,8 @@
-# FrameForge (dataset workflow bundle)
+# FrameForge: what it is and does
 
-FrameForge automates creation of character training datasets: rename source clips, cap frames, pick diverse samples, crop/flip, and optionally stage the final set. Place character videos in input_videos, grouped by character folder, and include a representative full-body cover JPG inside each folder. The script does not remove background actors or other artifacts — it's best used with clean inputs (e.g., Grok-generated videos; works best with Grok Imagine: grok.com/imagine/).
+FrameForge is a one-button pipeline for building character image datasets: drop your character folders (MP4s + a cover JPG) into `input_videos`, run `python workflow.py`, and it renames files, exports frames, picks a balanced subset, crops/flips them, and optionally autotags the final images. Clean inputs work best because the script does not remove background actors or artifacts. Outputs land in `final_ready` if you keep the final move on, otherwise in `workspace`.
+
+Example use case: you have five short MP4 clips of a character. Put them in `input_videos/CharacterA` with a cover JPG, run `python workflow.py --autotag`, and you get a curated, cropped, tagged set of images in `final_ready/CharacterA` without manual frame picking.
 
 ## Structure (bundle-rooted)
 - Folders: `input_videos` (place source videos/folders), `frames_capped` (ffmpeg frame output), `workspace/raw` (staging for selection), `workspace` (selected + cropped), `final_ready` (optional final drop), `archive_mp4` (flat MP4 archive)
@@ -20,6 +22,7 @@ FrameForge automates creation of character training datasets: rename source clip
 4) Select up to 40 diverse images per character (10 face quota) into `workspace` (`select_caps.py`).
 5) Crop and flip selected images in-place (`crop_and_flip.Bulk.py`).
 6) If `ENABLE_FINAL_MOVE` is True, move the final folders into `final_ready`.
+7) Optional: tag the finished set with `--autotag` (defaults in `autotag.config.json`; writes into `final_ready` if moved, otherwise `workspace`).
 
 ## Run
 ```
