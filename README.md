@@ -31,6 +31,5 @@ python workflow.py --autotag
 ```
 
 ## Notes
-- No `__pycache__` or build artifacts are included; ready to zip `workflow_bundle/` for distribution.
 - `crop_and_flip.Bulk.py` processes files named `1.jpg`, `2.png`, etc.; adjust or wrap if you need different patterns.
 - Autotag: folder name is added as first tag, ratings are skipped, defaults use thresholds 0.4/0.4 and max 30 tags (edit in `autotag.config.json`).
